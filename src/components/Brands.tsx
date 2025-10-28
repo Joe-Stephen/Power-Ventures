@@ -1,5 +1,12 @@
-import React, { useEffect, useRef } from 'react';
-import './Brands.css';
+import havellsImg from "../uploads/havells.png";
+import philipsImg from "../uploads/philips.png";
+import bajajImg from "../uploads/bajaj.png";
+import finolexImg from "../uploads/finolex.jpg";
+import anchorImg from "../uploads/anchor.png";
+import legrandImg from "../uploads/legrand.png";
+import schneiderImg from "../uploads/schneider.png";
+import React, { useEffect, useRef } from "react";
+import "./Brands.css";
 
 interface Brand {
   id: number;
@@ -11,14 +18,13 @@ const Brands: React.FC = () => {
   const brandsTrackRef = useRef<HTMLDivElement>(null);
 
   const brands: Brand[] = [
-    { id: 1, name: 'Havells', icon: 'fas fa-industry' },
-    { id: 2, name: 'Philips', icon: 'fas fa-industry' },
-    { id: 3, name: 'Bajaj', icon: 'fas fa-industry' },
-    { id: 4, name: 'Finolex', icon: 'fas fa-industry' },
-    { id: 5, name: 'Anchor', icon: 'fas fa-industry' },
-    { id: 6, name: 'Legrand', icon: 'fas fa-industry' },
-    { id: 7, name: 'Schneider', icon: 'fas fa-industry' },
-    { id: 8, name: 'Osram', icon: 'fas fa-industry' }
+    { id: 1, name: "Havells", icon: havellsImg },
+    { id: 2, name: "Philips", icon: philipsImg },
+    { id: 3, name: "Bajaj", icon: bajajImg },
+    { id: 4, name: "Finolex", icon: finolexImg },
+    { id: 5, name: "Anchor", icon: anchorImg },
+    { id: 6, name: "Legrand", icon: legrandImg },
+    { id: 7, name: "Schneider", icon: schneiderImg },
   ];
 
   useEffect(() => {
@@ -26,19 +32,19 @@ const Brands: React.FC = () => {
     if (!track) return;
 
     const handleMouseEnter = () => {
-      track.style.animationPlayState = 'paused';
+      track.style.animationPlayState = "paused";
     };
 
     const handleMouseLeave = () => {
-      track.style.animationPlayState = 'running';
+      track.style.animationPlayState = "running";
     };
 
-    track.addEventListener('mouseenter', handleMouseEnter);
-    track.addEventListener('mouseleave', handleMouseLeave);
+    track.addEventListener("mouseenter", handleMouseEnter);
+    track.addEventListener("mouseleave", handleMouseLeave);
 
     return () => {
-      track.removeEventListener('mouseenter', handleMouseEnter);
-      track.removeEventListener('mouseleave', handleMouseLeave);
+      track.removeEventListener("mouseenter", handleMouseEnter);
+      track.removeEventListener("mouseleave", handleMouseLeave);
     };
   }, []);
 
@@ -47,14 +53,16 @@ const Brands: React.FC = () => {
       <div className="container">
         <div className="section-header">
           <h2>Trusted Brands</h2>
-          <p>We partner with leading manufacturers to bring you the best products</p>
+          <p>
+            We partner with leading manufacturers to bring you the best products
+          </p>
         </div>
         <div className="brands-carousel">
           <div className="brands-track" ref={brandsTrackRef}>
             {brands.map((brand) => (
               <div key={brand.id} className="brand-item">
                 <div className="brand-logo">
-                  <i className={brand.icon}></i>
+                  <img src={brand.icon} alt={brand.name} />
                   <h4>{brand.name}</h4>
                 </div>
               </div>
@@ -63,7 +71,7 @@ const Brands: React.FC = () => {
             {brands.map((brand) => (
               <div key={`duplicate-${brand.id}`} className="brand-item">
                 <div className="brand-logo">
-                  <i className={brand.icon}></i>
+                  <img src={brand.icon} alt={brand.name} />
                   <h4>{brand.name}</h4>
                 </div>
               </div>

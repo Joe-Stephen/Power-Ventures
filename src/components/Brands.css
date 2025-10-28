@@ -66,11 +66,26 @@
     font-size: 1.1rem;
 }
 
+.brand-logo img {
+    width: 140px;
+    /* Standard width for all logos */
+    height: 90px;
+    /* Fixed height for uniform look */
+    object-fit: contain;
+    /* Ensures full logo is visible without cropping */
+    display: block;
+    margin: 0 auto 1rem auto;
+    /* Centers image and adds space below */
+    mix-blend-mode: multiply;
+    /* Makes white logos blend nicely on light backgrounds */
+}
+
 /* Animations */
 @keyframes scroll {
     0% {
         transform: translateX(0);
     }
+
     100% {
         transform: translateX(-50%);
     }
@@ -81,11 +96,11 @@
     .brands-track {
         animation-duration: 15s;
     }
-    
+
     .brand-item {
         width: 150px;
     }
-    
+
     .brand-logo {
         padding: 1.5rem;
     }
@@ -95,15 +110,15 @@
     .brand-item {
         width: 120px;
     }
-    
+
     .brand-logo {
         padding: 1rem;
     }
-    
+
     .brand-logo i {
         font-size: 2rem;
     }
-    
+
     .brand-logo h4 {
         font-size: 0.9rem;
     }
