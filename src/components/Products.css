@@ -24,19 +24,27 @@
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
 }
 
+/* ---------- FIXED IMAGE STYLING ---------- */
 .product-image {
     position: relative;
-    height: 200px;
+    height: 220px; /* uniform height */
     background: #f1f5f9;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    border-bottom: 1px solid #e2e8f0;
 }
 
-.product-placeholder {
-    font-size: 3rem;
-    color: #94a3b8;
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ensures no stretching */
+    transition: transform 0.4s ease;
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.05); /* subtle zoom on hover */
 }
 
 .product-overlay {
