@@ -42,7 +42,7 @@ const Contact: React.FC = () => {
               <i className="fas fa-map-marker-alt"></i>
               <div>
                 <h4>Address</h4>
-                <p>123 Shop Street<br />Your City, State 12345</p>
+                <p>Power Ventures<br />Palarivattom, Ernakulam<br /> Kerala 680303</p>
               </div>
             </div>
             <div className="contact-item">
