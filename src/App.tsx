@@ -4,6 +4,8 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Brands from './components/Brands';
 import Products from './components/Products';
+import FeaturedWorks from './components/FeaturedWorks';
+import WhyUs from './components/WhyUs';
 import Testimonials from './components/Testimonials';
 import About from './components/About';
 import Contact from './components/Contact';
@@ -16,6 +18,8 @@ function App() {
       <Hero />
       <Brands />
       <Products />
+      <FeaturedWorks />
+      <WhyUs />
       <Testimonials />
       <About />
       <Contact />
