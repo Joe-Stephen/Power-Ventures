@@ -1,32 +1,34 @@
-import React, { useState } from 'react';
-import './Contact.css';
+import React, { useState } from "react";
+import "./Contact.css";
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
+    name: "",
+    email: "",
+    message: "",
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.message) {
-      alert('Please fill in all fields');
+      alert("Please fill in all fields");
       return;
     }
-    
+
     // Simulate form submission
-    alert('Thank you for your message! We\'ll get back to you soon.');
-    setFormData({ name: '', email: '', message: '' });
+    alert("Thank you for your message! We'll get back to you soon.");
+    setFormData({ name: "", email: "", message: "" });
   };
 
   return (
@@ -42,7 +44,13 @@ const Contact: React.FC = () => {
               <i className="fas fa-map-marker-alt"></i>
               <div>
                 <h4>Address</h4>
-                <p>Power Ventures<br />Palarivattom, Ernakulam<br /> Kerala 680303</p>
+                <p>
+                  Powerventures
+                  <br />
+                  43/539, Nettayikodath Road
+                  <br /> Palarivattom PO
+                  <br /> Ernakulam 682025
+                </p>
               </div>
             </div>
             <div className="contact-item">
@@ -56,7 +64,7 @@ const Contact: React.FC = () => {
               <i className="fas fa-envelope"></i>
               <div>
                 <h4>Email</h4>
-                <p>info@powerventures.com</p>
+                <p>powerventureskochi@gmail.com</p>
               </div>
             </div>
           </div>
@@ -91,7 +99,9 @@ const Contact: React.FC = () => {
                 required
               ></textarea>
             </div>
-            <button type="submit" className="btn btn-primary">Send Message</button>
+            <button type="submit" className="btn btn-primary">
+              Send Message
+            </button>
           </form>
         </div>
       </div>
