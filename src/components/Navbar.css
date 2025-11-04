@@ -22,13 +22,19 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 70px;
+    height: 100px;
 }
 
-.nav-logo h2 {
-    color: #2563eb;
-    font-weight: 700;
-    font-size: 1.5rem;
+.nav-logo {
+    display: flex;
+    align-items: center;
+}
+
+.nav-logo img {
+    height: 100px;
+    width: auto;
+    object-fit: contain;
+    max-width: 100%;
 }
 
 .nav-menu {
@@ -100,8 +106,27 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .nav-container {
+        height: 70px;
+        padding: 0 15px;
+    }
+    
+    .nav-logo {
+        flex: 0 0 auto;
+        max-width: calc(100% - 50px);
+    }
+    
+    .nav-logo img {
+        height: 50px;
+        max-width: 200px;
+    }
+    
     .hamburger {
         display: flex;
+        z-index: 1001;
+        position: relative;
+        flex-shrink: 0;
+        margin-left: 10px;
     }
     
     .nav-menu {
@@ -115,6 +140,7 @@
         transition: 0.3s;
         box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
         padding: 2rem 0;
+        z-index: 1000;
     }
     
     .nav-menu.active {
@@ -123,5 +149,20 @@
     
     .nav-menu li {
         margin: 1rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .nav-logo img {
+        height: 40px;
+        max-width: 150px;
+    }
+    
+    .nav-container {
+        height: 60px;
+    }
+    
+    .nav-menu {
+        top: 60px;
     }
 }

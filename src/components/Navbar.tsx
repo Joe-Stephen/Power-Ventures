@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Navbar.css';
+import logo from '../uploads/powerventures_logo.jpg';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -26,7 +27,7 @@ const Navbar: React.FC = () => {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="nav-container">
         <div className="nav-logo">
-          <h2>Power Ventures</h2>
+          <img src={logo} alt="Power Ventures" />
         </div>
         <ul className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
           <li className="nav-item">
