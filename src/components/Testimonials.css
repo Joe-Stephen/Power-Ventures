@@ -40,6 +40,17 @@
     font-family: serif;
 }
 
+.testimonial-title {
+    margin-bottom: 1.5rem;
+}
+
+.testimonial-title h3 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin: 0;
+}
+
 .testimonial-text p {
     font-size: 1.2rem;
     line-height: 1.7;
@@ -116,6 +127,10 @@
         padding: 2rem 1.5rem;
     }
     
+    .testimonial-title h3 {
+        font-size: 1.2rem;
+    }
+    
     .testimonial-text p {
         font-size: 1.1rem;
     }
@@ -129,6 +144,10 @@
 @media (max-width: 480px) {
     .testimonial-content {
         padding: 1.5rem 1rem;
+    }
+    
+    .testimonial-title h3 {
+        font-size: 1.1rem;
     }
     
     .testimonial-text p {

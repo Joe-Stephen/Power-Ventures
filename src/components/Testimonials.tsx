@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import './Testimonials.css';
+import React, { useState, useEffect } from "react";
+import "./Testimonials.css";
 
 interface Testimonial {
   id: number;
+  title: string;
   text: string;
   author: string;
   role: string;
@@ -14,33 +15,44 @@ const Testimonials: React.FC = () => {
   const testimonials: Testimonial[] = [
     {
       id: 1,
-      text: "Power Ventures has been our go-to supplier for all electrical needs. Their quality products and excellent service have never disappointed us. Highly recommended!",
-      author: "Rajesh Kumar",
-      role: "Electrical Contractor"
+      title: "Reliable & Professional Electrical Partner",
+      text: "Power Ventures has been our trusted supplier for project materials across multiple residential sites. Their product quality, pricing clarity, and fast delivery make them an indispensable partner for our business",
+      author: "Arjun Menon",
+      role: "Architect & Interior Designer",
     },
     {
       id: 2,
-      text: "The LED lighting solutions from Power Ventures have transformed our office space. Energy efficient and beautiful lighting that saves us money every month.",
-      author: "Priya Sharma",
-      role: "Office Manager"
+      title: "Excellent Range & Timely Delivery",
+      text: "From wires and switches to LED lighting, Power Ventures always provides authentic materials at the right price. Their team ensures timely delivery and professional coordination — highly dependable.",
+      author: "Vishnu R",
+      role: "Builder & Developer",
     },
     {
       id: 3,
-      text: "Outstanding customer service and premium quality products. The team at Power Ventures goes above and beyond to ensure customer satisfaction.",
-      author: "Amit Patel",
-      role: "Homeowner"
+      title: "Smooth Experience for Home Electrical Needs",
+      text: "We purchased all electrical fittings for our new home through Power Ventures. They explained options clearly, provided the best brand suggestions, and ensured fast delivery. Very satisfied.",
+      author: "Priya & Suresh",
+      role: "Home Owners",
     },
     {
       id: 4,
-      text: "Fast delivery, competitive prices, and top-notch quality. Power Ventures has become our trusted partner for all electrical supplies.",
-      author: "Sunita Reddy",
-      role: "Project Manager"
-    }
+      title: "Trusted by Contractors",
+      text: "As a project contractor, timely supply matters the most. Power Ventures always delivers as promised and supports us throughout installation. Excellent service and genuine products.",
+      author: "Rohit K",
+      role: " Electrical Contractor",
+    },
+    {
+      id: 5,
+      title: "Professional. Quality-Focused. Transparent",
+      text: "Power Ventures has been supporting our projects with a consistent supply of premium electrical materials since 2019. Highly professional team and great product knowledge.",
+      author: "Sandeep P",
+      role: " Interior Consultant",
+    },
   ];
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentSlide(prev => prev === testimonials.length ? 1 : prev + 1);
+      setCurrentSlide((prev) => (prev === testimonials.length ? 1 : prev + 1));
     }, 5000);
 
     return () => clearInterval(interval);
@@ -61,9 +73,14 @@ const Testimonials: React.FC = () => {
           {testimonials.map((testimonial) => (
             <div
               key={testimonial.id}
-              className={`testimonial-slide ${currentSlide === testimonial.id ? 'active' : ''}`}
+              className={`testimonial-slide ${
+                currentSlide === testimonial.id ? "active" : ""
+              }`}
             >
               <div className="testimonial-content">
+                <div className="testimonial-title">
+                  <h3>{testimonial.title}</h3>
+                </div>
                 <div className="testimonial-text">
                   <p>"{testimonial.text}"</p>
                 </div>
@@ -88,7 +105,9 @@ const Testimonials: React.FC = () => {
           {testimonials.map((_, index) => (
             <span
               key={index + 1}
-              className={`testimonial-dot ${currentSlide === index + 1 ? 'active' : ''}`}
+              className={`testimonial-dot ${
+                currentSlide === index + 1 ? "active" : ""
+              }`}
               onClick={() => goToSlide(index + 1)}
             ></span>
           ))}
