@@ -35,46 +35,80 @@ const Contact: React.FC = () => {
     const storedSubmissions = localStorage.getItem("contactSubmissions");
     if (storedSubmissions) {
       setSubmissions(JSON.parse(storedSubmissions));
-      
     }
   }, []);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // const handleSubmit = (e: React.FormEvent) => {
+  //   e.preventDefault();
+
+  //   if (!formData.name || !formData.email || !formData.phone || !formData.message) {
+  //     alert("Please fill in all fields");
+  //     return;
+  //   }
+
+  //   // Create submission object
+  //   const newSubmission: ContactSubmission = {
+  //     id: Date.now().toString(),
+  //     name: formData.name,
+  //     email: formData.email,
+  //     phone: formData.phone,
+  //     message: formData.message,
+  //     timestamp: new Date().toLocaleString(),
+  //   };
+
+  //   // Add to submissions list using functional update
+  //   setSubmissions((prevSubmissions) => {
+  //     const updatedSubmissions = [newSubmission, ...prevSubmissions];
+  //     // Save to localStorage
+  //     localStorage.setItem("contactSubmissions", JSON.stringify(updatedSubmissions));
+  //     return updatedSubmissions;
+  //   });
+
+  //   // Show success message
+  //   alert("Thank you for your message! We'll get back to you soon.");
+  //   setFormData({ name: "", email: "", phone: "", message: "" });
+  // };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.phone || !formData.message) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.message
+    ) {
       alert("Please fill in all fields");
       return;
     }
-
-    // Create submission object
-    const newSubmission: ContactSubmission = {
-      id: Date.now().toString(),
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      message: formData.message,
-      timestamp: new Date().toLocaleString(),
-    };
-
-    // Add to submissions list using functional update
-    setSubmissions((prevSubmissions) => {
-      const updatedSubmissions = [newSubmission, ...prevSubmissions];
-      // Save to localStorage
-      localStorage.setItem("contactSubmissions", JSON.stringify(updatedSubmissions));
-      return updatedSubmissions;
-    });
-
-    // Show success message
     alert("Thank you for your message! We'll get back to you soon.");
-    setFormData({ name: "", email: "", phone: "", message: "" });
+    try {
+      const res = await fetch(
+        "https://script.google.com/macros/s/AKfycbyDI-j3ueGP2Qrzdndcn-hCArRGve9NADTVIKNeBaYpCwgWmaoHTmkJt11uVif3gN0/exec",
+        {
+          method: "POST",
+          mode: "no-cors", // important for Apps Script
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+      setFormData({ name: "", email: "", phone: "", message: "" });
+    } catch (err) {
+      console.error(err);
+      alert("Failed to send message.");
+    }
   };
 
   const deleteSubmission = (id: string) => {
     if (window.confirm("Are you sure you want to delete this submission?")) {
       const updatedSubmissions = submissions.filter((sub) => sub.id !== id);
       setSubmissions(updatedSubmissions);
-      localStorage.setItem("contactSubmissions", JSON.stringify(updatedSubmissions));
+      localStorage.setItem(
+        "contactSubmissions",
+        JSON.stringify(updatedSubmissions)
+      );
     }
   };
 
@@ -176,7 +210,8 @@ const Contact: React.FC = () => {
             onClick={() => setShowSubmissions(!showSubmissions)}
             style={{ marginTop: "2rem" }}
           >
-            {showSubmissions ? "Hide" : "View"} Submissions ({submissions.length})
+            {showSubmissions ? "Hide" : "View"} Submissions (
+            {submissions.length})
           </button>
 
           {showSubmissions && submissions.length > 0 && (
@@ -209,7 +244,9 @@ const Contact: React.FC = () => {
                       </p>
                       <p>
                         <i className="fas fa-phone"></i>{" "}
-                        <a href={`tel:${submission.phone}`}>{submission.phone}</a>
+                        <a href={`tel:${submission.phone}`}>
+                          {submission.phone}
+                        </a>
                       </p>
                       <p className="submission-message">{submission.message}</p>
                       <p className="submission-time">
