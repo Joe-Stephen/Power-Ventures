@@ -1,12 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Contact.css";
+
+interface ContactSubmission {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+  timestamp: string;
+}
 
 const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    phone: "",
     message: "",
   });
+  const [submissions, setSubmissions] = useState<ContactSubmission[]>([]);
+  const [showSubmissions, setShowSubmissions] = useState(false);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -18,17 +30,59 @@ const Contact: React.FC = () => {
     }));
   };
 
+  // Load submissions from localStorage on component mount
+  useEffect(() => {
+    const storedSubmissions = localStorage.getItem("contactSubmissions");
+    if (storedSubmissions) {
+      setSubmissions(JSON.parse(storedSubmissions));
+      
+    }
+  }, []);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.email || !formData.message) {
+    if (!formData.name || !formData.email || !formData.phone || !formData.message) {
       alert("Please fill in all fields");
       return;
     }
 
-    // Simulate form submission
+    // Create submission object
+    const newSubmission: ContactSubmission = {
+      id: Date.now().toString(),
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      message: formData.message,
+      timestamp: new Date().toLocaleString(),
+    };
+
+    // Add to submissions list using functional update
+    setSubmissions((prevSubmissions) => {
+      const updatedSubmissions = [newSubmission, ...prevSubmissions];
+      // Save to localStorage
+      localStorage.setItem("contactSubmissions", JSON.stringify(updatedSubmissions));
+      return updatedSubmissions;
+    });
+
+    // Show success message
     alert("Thank you for your message! We'll get back to you soon.");
-    setFormData({ name: "", email: "", message: "" });
+    setFormData({ name: "", email: "", phone: "", message: "" });
+  };
+
+  const deleteSubmission = (id: string) => {
+    if (window.confirm("Are you sure you want to delete this submission?")) {
+      const updatedSubmissions = submissions.filter((sub) => sub.id !== id);
+      setSubmissions(updatedSubmissions);
+      localStorage.setItem("contactSubmissions", JSON.stringify(updatedSubmissions));
+    }
+  };
+
+  const clearAllSubmissions = () => {
+    if (window.confirm("Are you sure you want to delete all submissions?")) {
+      setSubmissions([]);
+      localStorage.removeItem("contactSubmissions");
+    }
   };
 
   return (
@@ -90,6 +144,16 @@ const Contact: React.FC = () => {
               />
             </div>
             <div className="form-group">
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Your Phone Number"
+                value={formData.phone}
+                onChange={handleInputChange}
+                required
+              />
+            </div>
+            <div className="form-group">
               <textarea
                 name="message"
                 placeholder="Your Message"
@@ -103,6 +167,64 @@ const Contact: React.FC = () => {
               Send Message
             </button>
           </form>
+        </div>
+
+        {/* Submissions List */}
+        <div className="submissions-section">
+          <button
+            className="btn btn-secondary"
+            onClick={() => setShowSubmissions(!showSubmissions)}
+            style={{ marginTop: "2rem" }}
+          >
+            {showSubmissions ? "Hide" : "View"} Submissions ({submissions.length})
+          </button>
+
+          {showSubmissions && submissions.length > 0 && (
+            <div className="submissions-list">
+              <div className="submissions-header">
+                <h3>Contact Form Submissions</h3>
+                <button
+                  className="btn btn-small btn-danger"
+                  onClick={clearAllSubmissions}
+                >
+                  Clear All
+                </button>
+              </div>
+              <div className="submissions-grid">
+                {submissions.map((submission) => (
+                  <div key={submission.id} className="submission-card">
+                    <div className="submission-header">
+                      <h4>{submission.name}</h4>
+                      <button
+                        className="delete-btn"
+                        onClick={() => deleteSubmission(submission.id)}
+                        aria-label="Delete submission"
+                      >
+                        <i className="fas fa-times"></i>
+                      </button>
+                    </div>
+                    <div className="submission-details">
+                      <p>
+                        <i className="fas fa-envelope"></i> {submission.email}
+                      </p>
+                      <p>
+                        <i className="fas fa-phone"></i>{" "}
+                        <a href={`tel:${submission.phone}`}>{submission.phone}</a>
+                      </p>
+                      <p className="submission-message">{submission.message}</p>
+                      <p className="submission-time">
+                        <i className="fas fa-clock"></i> {submission.timestamp}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {showSubmissions && submissions.length === 0 && (
+            <p className="no-submissions">No submissions yet.</p>
+          )}
         </div>
       </div>
     </section>
